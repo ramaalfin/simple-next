@@ -40,6 +40,9 @@ export default function Home() {
           <Link href="/streaming" className="text-blue-600">
             View Streaming Page
           </Link>
+          <Link href="/ppr" className="text-blue-600">
+            View PPR Page
+          </Link>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a

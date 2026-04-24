@@ -2,10 +2,16 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  // cdn.dummyjson.com
   images: {
-    domains: ["cdn.dummyjson.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.dummyjson.com",
+        pathname: "/**",
+      },
+    ],
   },
+  cacheComponents: true, // Mengaktifkan Partial Prerendering
 };
 
 export default nextConfig;
