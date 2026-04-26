@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  cacheComponents: true, // Mengaktifkan Partial Prerendering
+  cacheComponents: true, // Mengaktifkan Cache Components
 };
 
 export default nextConfig;
