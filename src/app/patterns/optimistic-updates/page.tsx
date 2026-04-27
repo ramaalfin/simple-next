@@ -1,48 +1,76 @@
 import React from 'react';
 
 export const metadata = {
-  title: 'Materi: Optimistic Updates',
-  description: 'Materi tentang Optimistic Updates di Next.js',
+  title: 'Optimistic Updates di Next.js',
+  description: 'Materi mendalam tentang teknik Optimistic Updates untuk UX yang instan',
 };
 
 export default function OptimisticUpdatesPage() {
   return (
-    <main className="container mx-auto px-4 py-12 max-w-4xl text-left">
+    <main className="container mx-auto px-4 py-12 max-w-5xl text-left">
       <div className="mb-10 border-b border-gray-200 pb-8">
         <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 mb-4">
-          Optimistic Updates
+          Teknik: Optimistic Updates
         </h1>
-        <p className="text-xl text-gray-600 leading-relaxed italic">
-          Teknik UI untuk menghilangkan kesan "menunggu" pada pengguna.
+        <p className="text-xl text-gray-600 leading-relaxed">
+          Meningkatkan kepuasan pengguna dengan memberikan respon UI yang instan sebelum data benar-benar tersimpan di server.
         </p>
       </div>
 
       <section className="mb-12">
-        <div className="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-xl mb-8">
-          <h2 className="text-2xl font-bold text-emerald-900 mb-2">Bagaimana Cara Kerjanya?</h2>
-          <p className="text-emerald-800 leading-relaxed">
-            Kita memperbarui UI secara instan seolah-olah operasi server sudah sukses. Jika ternyata gagal, kita mengembalikan (rollback) UI ke status semula.
-          </p>
-        </div>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Konsep Optimis</h2>
+        <p className="text-gray-700 mb-6 leading-relaxed">
+          Dalam aplikasi web biasa, saat Anda menekan tombol "Like", aplikasi akan mengirim request ke server dan menunggu jawaban sebelum mengubah tampilan tombol tersebut. Ini menyebabkan jeda (delay).
+          <br /><br />
+          <strong>Optimistic Updates</strong> bekerja dengan cara:
+        </p>
+        <ol className="list-decimal list-inside space-y-3 text-gray-700 mb-8">
+          <li>Pengguna melakukan aksi (misal: Like).</li>
+          <li>Aplikasi <strong>segera</strong> mengubah UI (Like bertambah) seolah-olah sukses.</li>
+          <li>Aplikasi mengirim request ke server di latar belakang.</li>
+          <li>Jika server gagal, aplikasi akan membatalkan perubahan UI tersebut (**Rollback**).</li>
+        </ol>
+      </section>
 
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Implementasi dengan Hook `useOptimistic`</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">
+          Next.js menyediakan hook khusus bernama <code>useOptimistic</code> untuk memudahkan pola ini.
+        </p>
         <pre className="bg-gray-900 text-gray-100 p-5 rounded-xl overflow-x-auto text-sm font-mono shadow-lg mb-6">
-{`// Contoh Alur useOptimistic di Next.js
-const [optimisticState, addOptimistic] = useOptimistic(
-  state,
-  (currentState, newValue) => {
-    // Logika update UI seketika
-    return [...currentState, newValue];
+{`'use client'
+import { useOptimistic } from 'react'
+
+export function LikeButton({ initialLikes }) {
+  // 1. Definisikan state optimis
+  const [optimisticLikes, addOptimisticLike] = useOptimistic(
+    initialLikes,
+    (state, newLike) => state + 1
+  )
+
+  async function handleLikeAction() {
+    // 2. Update UI secara instan
+    addOptimisticLike(1)
+    
+    // 3. Panggil Server Action
+    await submitLikeToDatabase()
   }
-);`}
+
+  return (
+    <button onClick={handleLikeAction}>
+      Like: {optimisticLikes}
+    </button>
+  )
+}`}
         </pre>
       </section>
 
-      <div className="p-6 border border-gray-200 rounded-2xl bg-gray-50">
-        <h4 className="font-bold text-gray-900 mb-2">Contoh Nyata:</h4>
-        <p className="text-sm text-gray-600">
-          Saat Anda menekan tombol "Like" di Instagram, angka bertambah seketika. Instagram tidak menunggu server menjawab "Ya, Like berhasil" untuk mengubah angka tersebut. Itulah Optimistic Update.
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4 text-orange-700">Penting: Penanganan Rollback</h2>
+        <p className="text-gray-700 mb-6 leading-relaxed">
+          Satu hal yang tidak boleh dilupakan adalah <strong>Rollback</strong>. Jika permintaan API gagal (misal: koneksi terputus), state optimis akan otomatis kembali ke state asli yang ada di server saat komponen di-render ulang dengan data asli.
         </p>
-      </div>
+      </section>
     </main>
   );
 }

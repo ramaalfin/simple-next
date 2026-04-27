@@ -76,22 +76,27 @@ export default function Home() {
           <Link href="/advanced-caching" className="text-blue-600">
             View Advanced Caching (Overview)
           </Link>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mt-2 pt-4 border-t border-gray-100">
-            <Link href="/patterns/swr-strategy" className="text-blue-500 text-sm hover:underline">
-              → Stale-While-Revalidate
+        </div>
+
+        <div className="mt-8">
+          <h3 className="text-xl font-bold mb-4">Advanced Patterns & Strategies</h3>
+          <div className="flex flex-wrap gap-4 text-base font-medium">
+            <Link href="/patterns/swr-strategy" className="text-orange-600 hover:underline">
+              SWR Strategy
             </Link>
-            <Link href="/patterns/optimistic-updates" className="text-blue-500 text-sm hover:underline">
-              → Optimistic Updates
+            <Link href="/patterns/optimistic-updates" className="text-orange-600 hover:underline">
+              Optimistic Updates
             </Link>
-            <Link href="/patterns/normalized-cache" className="text-blue-500 text-sm hover:underline">
-              → Normalized Cache
+            <Link href="/patterns/normalized-cache" className="text-orange-600 hover:underline">
+              Normalized Cache
             </Link>
-            <Link href="/patterns/websocket-sync" className="text-blue-500 text-sm hover:underline">
-              → WebSocket Cache Sync
+            <Link href="/patterns/websocket-sync" className="text-orange-600 hover:underline">
+              WebSocket Sync
             </Link>
           </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+
+        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row mt-12">
           <a
             className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
             href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
