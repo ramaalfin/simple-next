@@ -73,6 +73,23 @@ export default function Home() {
           <Link href="/server-actions" className="text-blue-600">
             View Server Actions
           </Link>
+          <Link href="/advanced-caching" className="text-blue-600">
+            View Advanced Caching (Overview)
+          </Link>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mt-2 pt-4 border-t border-gray-100">
+            <Link href="/patterns/swr-strategy" className="text-blue-500 text-sm hover:underline">
+              → Stale-While-Revalidate
+            </Link>
+            <Link href="/patterns/optimistic-updates" className="text-blue-500 text-sm hover:underline">
+              → Optimistic Updates
+            </Link>
+            <Link href="/patterns/normalized-cache" className="text-blue-500 text-sm hover:underline">
+              → Normalized Cache
+            </Link>
+            <Link href="/patterns/websocket-sync" className="text-blue-500 text-sm hover:underline">
+              → WebSocket Cache Sync
+            </Link>
+          </div>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
