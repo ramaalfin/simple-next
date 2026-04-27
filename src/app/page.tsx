@@ -64,6 +64,12 @@ export default function Home() {
           <Link href="/tanstack-query" className="text-blue-600">
             View TanStack Query
           </Link>
+          <Link href="/zustand" className="text-blue-600">
+            View Zustand
+          </Link>
+          <Link href="/zustand-tanstack" className="text-blue-600">
+            View Zustand + TanStack
+          </Link>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
