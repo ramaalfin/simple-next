@@ -58,6 +58,9 @@ export default function Home() {
           <Link href="/isr" className="text-blue-600">
             View ISR Page
           </Link>
+          <Link href="/redux" className="text-blue-600">
+            View Redux Patterns
+          </Link>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
