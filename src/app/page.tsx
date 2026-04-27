@@ -43,6 +43,15 @@ export default function Home() {
           <Link href="/ppr" className="text-blue-600">
             View PPR Page
           </Link>
+          <Link href="/caching" className="text-blue-600">
+            View Caching Page
+          </Link>
+          <Link href="/csr" className="text-blue-600">
+            View CSR Page
+          </Link>
+          <Link href="/ssr" className="text-blue-600">
+            View SSR Page
+          </Link>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
