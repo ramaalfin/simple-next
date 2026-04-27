@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { CommentCard, type Comment } from "./components/CommentCard";
+import { TimeDisplay } from "@/app/isr/components/TimeDisplay";
 
 export const metadata = {
   title: "Incremental Static Regeneration (ISR) | DummyJSON Comments",
@@ -7,14 +8,9 @@ export const metadata = {
     "A page demonstrating ISR by revalidating static data every 60 seconds.",
 };
 
-/**
- * Pengambilan data untuk ISR.
- * Opsi next: { revalidate: 60 } memberitahu Next.js untuk melakukan pengecekan
- * dan pembaruan data di latar belakang maksimal setiap 60 detik.
- */
 async function getComments(): Promise<Comment[]> {
   const res = await fetch("https://dummyjson.com/comments?limit=10", {
-    next: { revalidate: 60 }, // Revalidasi setiap 60 detik
+    next: { revalidate: 60 },
   });
 
   if (!res.ok) {
@@ -25,12 +21,18 @@ async function getComments(): Promise<Comment[]> {
   return data.comments;
 }
 
-export default async function ISRPage() {
+async function CommentList() {
   const comments = await getComments();
+  return (
+    <div className="grid grid-cols-1 gap-4">
+      {comments.map((comment) => (
+        <CommentCard key={comment.id} comment={comment} />
+      ))}
+    </div>
+  );
+}
 
-  // Waktu pembuatan halaman untuk membuktikan revalidasi
-  const generatedAt = new Date().toLocaleTimeString();
-
+export default function ISRPage() {
   return (
     <main className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="mb-8 border-b pb-4">
@@ -49,7 +51,7 @@ export default async function ISRPage() {
             <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
           </span>
           <span>
-            Halaman ini di-render pada pukul: <strong>{generatedAt}</strong>
+            Halaman ini di-render pada pukul: <TimeDisplay />
             <br />
             <span className="text-xs text-green-600">
               (Jika Anda merefresh halaman setelah 60 detik, waktu di atas akan
@@ -59,11 +61,15 @@ export default async function ISRPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
-        {comments.map((comment) => (
-          <CommentCard key={comment.id} comment={comment} />
-        ))}
-      </div>
+      <Suspense
+        fallback={
+          <div className="flex justify-center p-12">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-600"></div>
+          </div>
+        }
+      >
+        <CommentList />
+      </Suspense>
     </main>
   );
 }
