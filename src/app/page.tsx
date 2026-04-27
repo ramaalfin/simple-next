@@ -70,6 +70,9 @@ export default function Home() {
           <Link href="/zustand-tanstack" className="text-blue-600">
             View Zustand + TanStack
           </Link>
+          <Link href="/server-actions" className="text-blue-600">
+            View Server Actions
+          </Link>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
