@@ -52,6 +52,9 @@ export default function Home() {
           <Link href="/ssr" className="text-blue-600">
             View SSR Page
           </Link>
+          <Link href="/ssg" className="text-blue-600">
+            View SSG Page
+          </Link>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
