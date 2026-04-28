@@ -93,6 +93,12 @@ export default function Home() {
             <Link href="/patterns/websocket-sync" className="text-orange-600 hover:underline">
               WebSocket Sync
             </Link>
+            <Link href="/patterns/advanced-streaming" className="text-orange-600 hover:underline">
+              Advanced Streaming
+            </Link>
+            <Link href="/patterns/edge-runtime" className="text-orange-600 hover:underline">
+              Edge Runtime
+            </Link>
           </div>
         </div>
 
