@@ -76,6 +76,9 @@ export default function Home() {
           <Link href="/advanced-caching" className="text-blue-600">
             View Advanced Caching (Overview)
           </Link>
+          <Link href="/products" className="text-blue-600 font-semibold">
+            View Products (Multi-Strategy Demo)
+          </Link>
         </div>
 
         <div className="mt-8">
