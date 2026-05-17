@@ -53,7 +53,7 @@ async function SearchContent({
         </code>{" "}
         component. On submit it navigates to{" "}
         <code className="bg-pink-100 px-1 rounded font-mono text-xs">
-          /products/search?q=...
+          /complex-rendering/search?q=...
         </code>
         . The server reads{" "}
         <code className="bg-pink-100 px-1 rounded font-mono text-xs">

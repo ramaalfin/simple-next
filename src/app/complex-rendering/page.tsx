@@ -89,7 +89,7 @@ export default function ProductsPage() {
             <SearchBar />
           </Suspense>
           <Link
-            href="/products/search"
+            href="/complex-rendering/search"
             className="text-sm text-blue-600 hover:underline whitespace-nowrap"
           >
             Advanced search →

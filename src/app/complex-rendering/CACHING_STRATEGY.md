@@ -12,20 +12,20 @@ via `export const revalidate` or `fetch` options.
 
 | Route / Section          | Strategy                  | Cache Lifetime | Directive / API                          |
 |--------------------------|---------------------------|----------------|------------------------------------------|
-| `/products`              | ISR (category listing)    | ~1 hour        | `'use cache' + cacheLife('hours')`       |
-| `/products/category/[slug]` | ISR (product grid)     | ~1 hour        | `'use cache' + cacheLife('hours')`       |
-| `/products/[id]`         | SSR streaming (product info) | No cache    | No directive — fresh on every request    |
-| `/products/[id]` reviews | SSR streaming             | No cache       | No directive — streamed via `<Suspense>` |
-| `/products/[id]` related | PPR (static shell)        | ~1 hour        | `'use cache' + cacheLife('hours')`       |
-| `/products/[id]` inventory | Real-time CSR           | No cache       | Client-side polling every 15s            |
-| `/products/search`       | CSR + server filtering    | No cache       | `searchParams` — dynamic by default      |
-| `/api/products/inventory` | No cache                 | No cache       | `Cache-Control: no-store`                |
+| `/complex-rendering`              | ISR (category listing)    | ~1 hour        | `'use cache' + cacheLife('hours')`       |
+| `/complex-rendering/category/[slug]` | ISR (product grid)     | ~1 hour        | `'use cache' + cacheLife('hours')`       |
+| `/complex-rendering/[id]`         | SSR streaming (product info) | No cache    | No directive — fresh on every request    |
+| `/complex-rendering/[id]` reviews | SSR streaming             | No cache       | No directive — streamed via `<Suspense>` |
+| `/complex-rendering/[id]` related | PPR (static shell)        | ~1 hour        | `'use cache' + cacheLife('hours')`       |
+| `/complex-rendering/[id]` inventory | Real-time CSR           | No cache       | Client-side polling every 15s            |
+| `/complex-rendering/search`       | CSR + server filtering    | No cache       | `searchParams` — dynamic by default      |
+| `/api/complex-rendering/inventory` | No cache                 | No cache       | `Cache-Control: no-store`                |
 
 ---
 
 ## Strategy Details
 
-### 1. Category Listing — ISR (`/products`, `/products/category/[slug]`)
+### 1. Category Listing — ISR (`/complex-rendering`, `/complex-rendering/category/[slug]`)
 
 **Why ISR?** Category names and product lists change infrequently (new products
 are added, not removed constantly). Serving a cached version for up to 1 hour
@@ -55,7 +55,7 @@ edge for up to 1 hour.
 
 ---
 
-### 2. Product Detail — SSR Streaming (`/products/[id]`)
+### 2. Product Detail — SSR Streaming (`/complex-rendering/[id]`)
 
 **Why SSR?** Product prices, descriptions, and availability can change at any
 time. Serving stale product info (especially price) is a business risk. Fresh
@@ -89,7 +89,7 @@ the CDN edge.
 
 ---
 
-### 3. Related Products — PPR (`/products/[id]` related section)
+### 3. Related Products — PPR (`/complex-rendering/[id]` related section)
 
 **Why PPR?** Related products (same category) change infrequently. They can be
 included in the static shell of the product detail page, reducing the amount of
@@ -113,17 +113,17 @@ the dynamic product info streams in at request time.
 
 ---
 
-### 4. Inventory — Real-Time CSR (`/products/[id]` inventory badge)
+### 4. Inventory — Real-Time CSR (`/complex-rendering/[id]` inventory badge)
 
 **Why real-time CSR?** Stock levels change frequently (purchases, restocks).
 Showing stale inventory data could lead to overselling or poor UX. The
-`InventoryBadge` component polls `/api/products/inventory?id=...` every 15
+`InventoryBadge` component polls `/api/complex-rendering/inventory?id=...` every 15
 seconds from the client.
 
 **Implementation:**
 ```tsx
 'use client'
-// Polls /api/products/inventory every 15 seconds
+// Polls /api/complex-rendering/inventory every 15 seconds
 useEffect(() => {
   fetchInventory()
   const interval = setInterval(fetchInventory, 15_000)
@@ -139,18 +139,18 @@ WebSockets or Server-Sent Events for true real-time updates.
 
 ---
 
-### 5. Search — CSR + Server-Side Filtering (`/products/search`)
+### 5. Search — CSR + Server-Side Filtering (`/complex-rendering/search`)
 
 **Why CSR + server filtering?** Search queries are user-specific and
 unpredictable — caching them would be wasteful and potentially incorrect. The
 search bar is a `'use client'` component that navigates to
-`/products/search?q=...`. The server reads `searchParams` (a runtime API) and
+`/complex-rendering/search?q=...`. The server reads `searchParams` (a runtime API) and
 runs the filter server-side, streaming results back.
 
 **Implementation:**
 ```tsx
 // SearchBar.tsx — 'use client'
-router.push(`/products/search?q=${encodeURIComponent(query)}`)
+router.push(`/complex-rendering/search?q=${encodeURIComponent(query)}`)
 
 // search/page.tsx — server component, reads searchParams
 async function SearchResults({ query }) {

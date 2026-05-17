@@ -18,9 +18,9 @@ export function SearchBar() {
 
       startTransition(() => {
         if (query) {
-          router.push(`/products/search?q=${encodeURIComponent(query)}`);
+          router.push(`/complex-rendering/search?q=${encodeURIComponent(query)}`);
         } else {
-          router.push("/products/search");
+          router.push("/complex-rendering/search");
         }
       });
     },

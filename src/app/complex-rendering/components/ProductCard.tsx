@@ -12,7 +12,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link
-      href={`/products/${product.id}`}
+      href={`/complex-rendering/${product.id}`}
       className="group block border border-gray-200 rounded-xl overflow-hidden bg-white hover:shadow-lg transition-shadow"
     >
       <div className="relative w-full h-48 bg-gray-50">

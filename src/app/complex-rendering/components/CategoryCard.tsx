@@ -16,7 +16,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
 
   return (
     <Link
-      href={`/products/category/${category.slug}`}
+      href={`/complex-rendering/category/${category.slug}`}
       className="group block border border-gray-200 rounded-xl p-5 bg-white hover:border-blue-400 hover:shadow-md transition-all"
     >
       <div className="flex items-center justify-between">

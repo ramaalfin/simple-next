@@ -37,7 +37,7 @@ This logs every cache hit, miss, and revalidation to the server console.
 
 ## 2. Monitoring by Strategy
 
-### ISR Routes (`/products`, `/products/category/[slug]`)
+### ISR Routes (`/complex-rendering`, `/complex-rendering/category/[slug]`)
 
 **What to monitor:**
 - Cache hit rate (should be >95% in steady state)
@@ -70,7 +70,7 @@ This logs every cache hit, miss, and revalidation to the server console.
 - Error rate >5% (upstream inventory API issues)
 - Response latency >500ms (consider circuit breaker)
 
-### Search (`/products/search`)
+### Search (`/complex-rendering/search`)
 
 **What to monitor:**
 - Search query volume and top queries

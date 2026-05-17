@@ -119,14 +119,14 @@ export default async function ProductDetailPage({ params }: PageProps) {
       <nav className="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
         <ol className="flex items-center gap-2 flex-wrap">
           <li>
-            <Link href="/products" className="hover:text-blue-600 transition-colors">
+            <Link href="/complex-rendering" className="hover:text-blue-600 transition-colors">
               Products
             </Link>
           </li>
           <li aria-hidden="true">›</li>
           <li>
             <Link
-              href={`/products/category/${product.category}`}
+              href={`/complex-rendering/category/${product.category}`}
               className="hover:text-blue-600 transition-colors capitalize"
             >
               {product.category}

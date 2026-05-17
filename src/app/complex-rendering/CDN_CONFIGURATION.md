@@ -12,10 +12,10 @@ strategy of each route:
 
 | Route                        | Strategy    | Cache-Control Header                                      |
 |------------------------------|-------------|-----------------------------------------------------------|
-| `/products`                  | ISR (1h)    | `s-maxage=3600, stale-while-revalidate=<expire-revalidate>` |
-| `/products/category/[slug]`  | ISR (1h)    | `s-maxage=3600, stale-while-revalidate=<expire-revalidate>` |
-| `/products/[id]`             | SSR         | `private, no-cache, no-store, max-age=0, must-revalidate` |
-| `/products/search`           | Dynamic     | `private, no-cache, no-store, max-age=0, must-revalidate` |
+| `/complex-rendering`                  | ISR (1h)    | `s-maxage=3600, stale-while-revalidate=<expire-revalidate>` |
+| `/complex-rendering/category/[slug]`  | ISR (1h)    | `s-maxage=3600, stale-while-revalidate=<expire-revalidate>` |
+| `/complex-rendering/[id]`             | SSR         | `private, no-cache, no-store, max-age=0, must-revalidate` |
+| `/complex-rendering/search`           | Dynamic     | `private, no-cache, no-store, max-age=0, must-revalidate` |
 | `/api/products/inventory`    | No cache    | `no-store`                                                |
 | `/_next/static/**`           | Static      | `public, max-age=31536000, immutable`                     |
 
@@ -153,18 +153,18 @@ await fetch('https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache', 
 
 ### 6. Dynamic Routes — Bypass CDN Cache
 
-Product detail pages (`/products/[id]`) and search (`/products/search`) are
+Product detail pages (`/products/[id]`) and search (`/complex-rendering/search`) are
 dynamic (SSR). Configure your CDN to bypass caching for these routes:
 
 **Cloudflare Cache Rule:**
 ```
-If URL path matches: /products/[0-9]* OR /products/search*
+If URL path matches: /complex-rendering/[0-9]* OR /complex-rendering/search*
 Then: Bypass Cache
 ```
 
 **AWS CloudFront Behavior:**
 ```
-Path Pattern: /products/[0-9]*
+Path Pattern: /complex-rendering/[0-9]*
 Cache Policy: CachingDisabled
 ```
 
@@ -189,7 +189,7 @@ Then: Bypass Cache
 - [ ] `rsc` header forwarded to origin
 - [ ] `Vary` header respected (or `_rsc` fallback in use)
 - [ ] `/_next/static/**` cached for 1 year with `immutable`
-- [ ] `/products` and `/products/category/**` cached with `s-maxage=3600`
-- [ ] `/products/[id]` and `/products/search` bypass CDN cache
+- [ ] `/complex-rendering` and `/complex-rendering/category/**` cached with `s-maxage=3600`
+- [ ] `/complex-rendering/[id]` and `/complex-rendering/search` bypass CDN cache
 - [ ] `/api/**` bypasses CDN cache
 - [ ] CDN purge triggered alongside `revalidateTag()` calls
