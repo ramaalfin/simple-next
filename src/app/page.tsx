@@ -79,6 +79,9 @@ export default function Home() {
           <Link href="/complex-rendering" className="text-blue-600 font-semibold">
             View Products (Multi-Strategy Demo)
           </Link>
+          <Link href="/seo" className="text-purple-600 font-semibold">
+            View SEO & Metadata API
+          </Link>
         </div>
 
         <div className="mt-8">
